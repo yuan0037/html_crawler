@@ -1,9 +1,9 @@
 import sys
-import urllib2
+import urllib
 
-from urlparse import urlparse
-from urlparse import urljoin
-from HTMLParser import HTMLParser
+from urllib.parse import urlparse
+from urllib.parse import urljoin
+from html.parser import HTMLParser
 from wpwcaDB import wpwcaDB
 
 import re
@@ -70,7 +70,7 @@ class MyHTMLParserForAHref(HTMLParser):
             if (not any(file_ext.lower() in excludeExtName for excludeExtName in excludeFileExt)) :
                 return False
             else:
-                print "excluded ", url
+                print ("excluded ", url)
                 return True
         except NameError:
             #print "could not split either by '/' or by '.'"
@@ -107,7 +107,7 @@ class MyHTMLParserForAHref(HTMLParser):
                                     if (not linkFound in self.listOfURL):
                                         self.listOfURL.append(linkFound)  
                             else:
-                                    print "ignored a link to :" , linkFound
+                                    print ("ignored a link to :" , linkFound)
                                     
     def handle_endtag(self, tag):
         if (tag.lower() == "body"):

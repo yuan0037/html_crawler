@@ -1,5 +1,6 @@
 import sys
-import urllib2
+import urllib
+import urllib.request
 
 from wpwcaDB import wpwcaDB
 from wpwcaParser import MyHTMLParserForAHref
@@ -12,7 +13,7 @@ from wpwcaParser import MyHTMLParserForAHref
 
 
 #maxLevel indicates how many levels you want to crawl
-maxLevel=3
+maxLevel=1
 currentLevel=0;
 
 #generalListOfURL keeps a list of URLs that has been parsed
@@ -26,10 +27,10 @@ def parseURLForAHref(url, level):
     global maxLevel
     global generalListOfURL
     global db
-    print "now start to  parse url=", url, " level=", level
+    print ("now start to  parse url=", url, " level=", level)
     if (level<=maxLevel):
         try:
-            webUrl=urllib2.urlopen(url)
+            webUrl=urllib.request.urlopen(url)
             if (webUrl.getcode() == 200):
                 data = webUrl.read()
                 #initiate a parser for ahref and feed it
@@ -38,7 +39,7 @@ def parseURLForAHref(url, level):
                 if (not url in generalListOfURL):
                     generalListOfURL.append(url)
                     parser = MyHTMLParserForAHref(level, url, maxLevel)
-                    parser.feed(data)
+                    parser.feed(str(data))
                     parser.close()
                     
                     #save to database the url being parsed and the level as well as the word count;
@@ -52,19 +53,19 @@ def parseURLForAHref(url, level):
                                 #recursive parsing
                                 parseURLForAHref(item, parser.myLevel+1)
                             except:
-                                print "Error happened when parsing ", item
+                                print ("Error happened when parsing ", item)
                                 pass   
                 else:
-                    print "do nothing because this url was parsed before already;"
+                    print ("do nothing because this url was parsed before already;")
             else:
-                print "Error code: ", str(webUrl.getcode()) , url,
+                print ("Error code: ", str(webUrl.getcode()) , url)
         except:
-            print "Unexpected error:", sys.exc_info()[0]
-            print "exception happened for ", url   
+            print ("Unexpected error:", sys.exc_info()[0])
+            print ("exception happened for ", url)   
             pass     
             
     else:
-        print "exceeding max level, do nothing"   
+        print ("exceeding max level, do nothing")   
 
 def main():
     # instantiate the parser and feed it some HTML
@@ -100,16 +101,16 @@ def main():
         #result string formatting
         if (entry["count"]!=None):
             if (entry["level"]==0):
-                print "Base Web Page Count for'",sys.argv[2].lower(), "'=", entry["count"]
+                print ("Base Web Page Count for'",sys.argv[2].lower(), "'=", entry["count"])
             elif (entry["level"]==1):
-                print "Child Page ",entry["url"]," count for ",sys.argv[2].lower()," =", entry["count"]
+                print ("Child Page ",entry["url"]," count for ",sys.argv[2].lower()," =", entry["count"])
             else:
                 groundStr="";
                 for i in range(1, entry["level"]):
                     groundStr+="Grand"
-                print groundStr, "Child Page ",entry["url"], "count for ",sys.argv[2].lower(), "=", entry["count"]
+                print (groundStr, "Child Page ",entry["url"], "count for ",sys.argv[2].lower(), "=", entry["count"])
                     
-    print "Task finished"        
+    print ("Task finished")        
 
 if __name__ == "__main__":
     main();

@@ -34,7 +34,7 @@ class wpwcaDB():
             
     def is_url_exist(self, url):
 
-        print "select * FROM {0} where url='{1}'".format(self.table, url)
+        print ("select * FROM {0} where url='{1}'".format(self.table, url))
         cursor = self.db.execute("select * FROM {0} where url='{1}'".format(self.table, url))
         if (len(cursor.fetchall())>0):
             return True
@@ -94,7 +94,7 @@ def test():
         print('ERROR in wpwcaDB.test(): Could not update data')
     
     if (db.is_url_exist("http://www.cbc.ca")):
-        print "found it"
+        print ("found it")
     for entry in db:
         print(entry)
     
