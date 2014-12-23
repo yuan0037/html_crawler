@@ -112,7 +112,7 @@ class MyHTMLParserForAHref(HTMLParser):
     def handle_endtag(self, tag):
         if (tag.lower() == "body"):
             self.inBody = False
-            print "total count = ", self.occurrenceOfWord   
+            #print "total count = ", self.occurrenceOfWord   
             
     #function to handle character and text data (tag contents)
     def handle_data(self, data):

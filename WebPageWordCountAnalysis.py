@@ -12,7 +12,7 @@ from wpwcaParser import MyHTMLParserForAHref
 
 
 #maxLevel indicates how many levels you want to crawl
-maxLevel=2
+maxLevel=3
 currentLevel=0;
 
 #generalListOfURL keeps a list of URLs that has been parsed
@@ -26,7 +26,7 @@ def parseURLForAHref(url, level):
     global maxLevel
     global generalListOfURL
     global db
-    print "now start to  parse for ahref, url=", url, " level=", level
+    print "now start to  parse url=", url, " level=", level
     if (level<=maxLevel):
         try:
             webUrl=urllib2.urlopen(url)
@@ -107,7 +107,7 @@ def main():
                 groundStr="";
                 for i in range(1, entry["level"]):
                     groundStr+="Grand"
-                print groundStr, "Child Page ",entry["url"], "count for ",sys.argv[2].lower(), "=", entry["count"],"'", entry["level"]
+                print groundStr, "Child Page ",entry["url"], "count for ",sys.argv[2].lower(), "=", entry["count"]
                     
     print "Task finished"        
 
