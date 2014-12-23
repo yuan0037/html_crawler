@@ -96,12 +96,12 @@ def main():
     
     #sort the table by level 
    
-    
+    print ("Final Results---------------")
     for entry in db.get_data_for_all():
         #result string formatting
         if (entry["count"]!=None):
             if (entry["level"]==0):
-                print ("Base Web Page Count for'",sys.argv[2].lower(), "'=", entry["count"])
+                print ("Base Web Page Count for ",sys.argv[2].lower(), "=", entry["count"])
             elif (entry["level"]==1):
                 print ("Child Page ",entry["url"]," count for ",sys.argv[2].lower()," =", entry["count"])
             else:
